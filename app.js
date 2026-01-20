@@ -10,8 +10,10 @@ let password = document.getElementById("password")
 let gender = document.getElementsByName("gender")
 let selectedGender = document.querySelector('input[name="gender"]:checked');
 
-// console.log(gender.length)
 
+
+let users = []
+let isChecked = false
 
 
 
@@ -28,8 +30,6 @@ const errorFunction = (title, message, icon) => {
 }
 
 const handlerSubmit = () => {
-    let users = []
-    let isChecked = false
 
 
     usersData = {
@@ -47,15 +47,8 @@ const handlerSubmit = () => {
             usersData.gender = gender[i].value
             isChecked = true
         }
-        if(isChecked = false){
-            errorFunction("Error", "error jdsd", "error")
-
-
-        }
-
     }
-
-
+   
 
     if (email.value.trim() == "" || password.value.trim() == "" || firstName.value.trim() == "" || lastName.value.trim() == "" ||
         date.value.trim() == "" || month.value.trim() == "" || year.value.trim() == ""  ) {
@@ -65,23 +58,23 @@ const handlerSubmit = () => {
     if (password.value.length < 8) {
         errorFunction("Error", "Your password must be greater than 8 characters", "error")
     }
+    if(isChecked == false){
+        errorFunction("Error", "Please enter your gender", "error")
+        return
+
+    }
 
 
     else {
         errorFunction("Conguration", "Your account has been created", "success")
     }
-    for (let i = 0; i < gender.length; i++) {
-        if(gender[i].checked){
-            usersData.gender = gender[i].value
-            isChecked = true
-        }
-    }
+  
    
     
     
     users.push(usersData)
 
-
+    JSON.parse(localStorage.getItem("users"))
     localStorage.setItem("users", JSON.stringify(users))
 
 
@@ -90,10 +83,5 @@ const handlerSubmit = () => {
 
 btn.addEventListener("click", handlerSubmit)
 
-for (let i = 0; i < gender.length; i++) {
-    console.log(gender[i].value.checked)
-  
-  
 
-}
 
